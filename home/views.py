@@ -89,11 +89,13 @@ def getWeather(lat,lon):
 		o.save()
 
 def save_weather(request):
-	lat = 12
-	lon = 80
-	for i in range(0,20):
-		#getWeather(lat,lon)
-		lon = lon+0.25
+	lt=[12.0,12.25,12.5,12.75,13.0,13.25,13.5,13.75,14.0,14.25,14.5,14.75,15.0,15.25,15.5,15.75,16.0,16.25]
+	ln=[80.0,80.25,80.5,80.75,81.0,81.25,81.5,81.75,82.0,82.25,82.5,82.75,83.0,83.25,83.5,83.75,84.0,84.25,84.5,84.75]
+
+	for i in lt:
+		for j in ln:
+			getWeather(i,j)
+	
 
 
 
@@ -121,5 +123,12 @@ def chat_query(request):
 	response["telgu"] = x["telgu"]
 
 	return JsonResponse(response)
+
+
+def chat_admin(request):
+	return render(request,'home/admin_chat.html')
+
+def administrator(request):
+	return render(request,'home/ADMINISTRATOR.html')
 
 	

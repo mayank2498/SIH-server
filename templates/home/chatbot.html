@@ -277,7 +277,7 @@ p { margin: 0; }
 
 				<div class="chat-message clearfix">
 					
-					<img src="https://image.freepik.com/free-photo/robot-doing-the-peace-sign_1048-3527.jpg" alt="" width="32" height="32">
+					<img src="https://image.freepik.com/free-photo/robot-doing-the-peace-sign_1048-3527.jpg" alt="" width="32" height="10px">
 
 					<div class="chat-message-content clearfix">
 						
@@ -350,7 +350,7 @@ p { margin: 0; }
 			var time = $('<span class="chat-time"></span>').append(formatAMPM(new Date()));
 			var username = $('<h5></h5>').append(String( "Farmer" ))
 			var content = $('<p></p>').append(query.val().trim());
-			var image = $('<img style="margin-left:-55px;border-radius:50%;" src="https://image.ibb.co/kszF27/1457e76dcae4a40.jpg"  width="32" height="22">');
+			var image = $('<img style="margin-left:-55px;border-radius:50%;" src="https://image.ibb.co/kszF27/1457e76dcae4a40.jpg"  width="32" height="20px">');
 
 			var chatMessageContent = $('<div class="chat-message-content clearfix;" style="color:red;">').append(image,time,username,content,"<hr><br>");
 			$('.chat-history').append(chatMessageContent);
@@ -372,7 +372,7 @@ p { margin: 0; }
 				var time = $('<span class="chat-time"></span>').append(formatAMPM(new Date()));
 				var username = $('<h5></h5>').append(String( "AgriBot" ))
 				var content = $('<p></p>').append(result.english);
-				var image = $("<img style='margin-left:-55px;border-radius:50%' src='https://image.freepik.com/free-photo/robot-doing-the-peace-sign_1048-3527.jpg' alt='' width='32' height='32'>");
+				var image = $("<img style='margin-left:-55px;border-radius:50%' src='https://image.freepik.com/free-photo/robot-doing-the-peace-sign_1048-3527.jpg' alt='' width='32' height='20px'>");
 				
 				var voice_ENGLISH = $('#ENGLISH');
 				voice_ENGLISH.click(function(){
@@ -450,9 +450,9 @@ p { margin: 0; }
 			var query = $('#message');
 
 			var time = $('<span class="chat-time"></span>').append(formatAMPM(new Date()));
-			var username = $('<h5></h5>').append(String( Farmer ))
+			var username = $('<h5></h5>').append(String( "Farmer" ))
 			var content = $('<p></p>').append(query.val().trim());
-			var image = $('<img style="margin-left:-55px;border-radius:50%;" src="{{customer.image.url}}"  width="32" height="32">');
+			var image = $('<img style="margin-left:-55px;border-radius:50%;" src="https://image.ibb.co/kszF27/1457e76dcae4a40.jpg"  width="32" height="10px">');
 
 			var chatMessageContent = $('<div class="chat-message-content clearfix;" style="color:red;">').append(image,time,username,content,"<hr><br>");
 			$('.chat-history').append(chatMessageContent);

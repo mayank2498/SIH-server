@@ -72,6 +72,14 @@ io.on('connection', function(socket) {
         xhttp.send(JSON.stringify(msgObject));
     });
 
+
+    socket.on('farmer_message', function(msgObject) {
+        console.log("got a post for admin suggestion");
+        // emits the msgObject to the client
+        socket.broadcast.emit('admin_sendQuery', msgObject);
+    });
+
+
     socket.on('wikisearch',function(queryObject){
         var url = 'http://' + host +':' + port + '/home/chat_query/';    
         xhttp.onreadystatechange = function() {
