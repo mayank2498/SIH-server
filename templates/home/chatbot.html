@@ -217,6 +217,14 @@ p { margin: 0; }
   font-style: italic; 
   margin: 0 0 0 80px;  
 }
+.mayank{
+	background: #293239;
+  border-radius: 5px 5px 0 0;
+  color: #fff;
+  cursor: pointer;
+  padding: 1px 0px;
+}
+
 
 
 
@@ -241,24 +249,26 @@ p { margin: 0; }
 			<h4>Agriculture Bot</h4><br>
 
 			<span class="chat-message-counter">Ask</span>
+			
+			
+
+		</header>
+		<div class="mayank">
 			<div class="container-fluid">
-  
 			  <div class="row">
+			  	<div class="col-lg-3">
+							<input id="ENGLISH" class="mihir" type="button" value="English"></input>
+			   		</div>
 			    	<div class="col-lg-3">
 			     		 <input id="HINDI" class="mihir" type="button" value="Hindi"></input>
 			    	</div>
 			   		 <div class="col-lg-3">
 							<input id="TAMIL" class="mihir" type="button" value="Tamil"></input>
 			   		</div>
-			   		 <div class="col-lg-3">
-							<input id="TELGU" class="mihir" type="button" value="Telgu"></input>
-			   		</div>
+			   		 
 			  	</div>
 			</div>
-			
-			
-
-		</header>
+		</div>
 
 		<div class="chat">
 			
@@ -305,10 +315,10 @@ p { margin: 0; }
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 	<script type="text/javascript">
-		(function() {
+		
 
 	$('#live-chat header').on('click', function() {
-		
+
 		$('.chat').slideToggle(300, 'swing');
 		$('.chat-message-counter').fadeToggle(300, 'swing');
 
@@ -321,11 +331,12 @@ p { margin: 0; }
 
 	});
 
-}) ();
+
 	</script>
 
 	
 	<script type="text/javascript">
+
 
 		var host = 'localhost';
 		var nodejs_port = '4000';
@@ -363,7 +374,15 @@ p { margin: 0; }
 				var content = $('<p></p>').append(result.english);
 				var image = $("<img style='margin-left:-55px;border-radius:50%' src='https://image.freepik.com/free-photo/robot-doing-the-peace-sign_1048-3527.jpg' alt='' width='32' height='32'>");
 				
-				
+				var voice_ENGLISH = $('#ENGLISH');
+				voice_ENGLISH.click(function(){
+					if(responsiveVoice.isPlaying()) {
+						responsiveVoice.pause();
+					}
+					else{
+						responsiveVoice.speak( result.english ,"UK English Male");
+					}
+				});
 				
 				var voice_HINDI = $('#HINDI');
 				voice_HINDI.click(function(){
@@ -377,8 +396,8 @@ p { margin: 0; }
 
 
 				var voice_TAMIL = $('#TAMIL');
-				voice_TAMIL.click(function(e){
-					e.preventDefault();
+				voice_TAMIL.click(function(){
+					
 					if(responsiveVoice.isPlaying()) {
 						responsiveVoice.pause();
 					}
@@ -387,15 +406,7 @@ p { margin: 0; }
 					}
 				});
 
-				var voice_TELGU = $('#TELGU');
-				voice_TELGU.click(function(){
-					if(responsiveVoice.isPlaying()) {
-						responsiveVoice.pause();
-					}
-					else{
-						responsiveVoice.speak( result.telgu ,"Telgu",{rate: 0.75});
-					}
-				});
+				
 
 				
 				var chatMessageContent = $('<div class="chat-message-content clearfix">').append(image,time,username,content,"<hr><br>");
