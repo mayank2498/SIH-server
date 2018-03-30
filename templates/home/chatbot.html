@@ -2,6 +2,9 @@
 	<script src='https://code.responsivevoice.org/responsivevoice.js'></script>
 	<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	<meta charset="UTF-8">
 	<title>Live Chat</title>
 	<
@@ -19,11 +22,13 @@
 		background-color: green;
 		color:white;
 		border-color: green;
-		height:35px;
-		width:150px;
+		height:25px;
+		width:100px;
 		margin-bottom:30px;
 		box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-
+		font: 400 30px/0.8 'Cookie', Helvetica, sans-serif;
+  		color: #fff;
+  		text-shadow: 4px 4px 3px rgba(0,0,0,0.1); 
 		margin-left:50%;
 	}
 	.mihir:hover{
@@ -210,10 +215,16 @@ p { margin: 0; }
 
 .chat-feedback {
   font-style: italic; 
-  margin: 0 0 0 80px;
+  margin: 0 0 0 80px;  
 }
+
+
+
 	</style>
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+	<link href='http://fonts.googleapis.com/css?family=Oleo+Script' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+
 
 </head>
 
@@ -227,9 +238,25 @@ p { margin: 0; }
 			
 			<a href="#" class="chat-close">x</a>
 
-			<h4>Agriculture Bot</h4>
+			<h4>Agriculture Bot</h4><br>
 
 			<span class="chat-message-counter">Ask</span>
+			<div class="container-fluid">
+  
+			  <div class="row">
+			    	<div class="col-lg-3">
+			     		 <input id="HINDI" class="mihir" type="button" value="Hindi"></input>
+			    	</div>
+			   		 <div class="col-lg-3">
+							<input id="TAMIL" class="mihir" type="button" value="Tamil"></input>
+			   		</div>
+			   		 <div class="col-lg-3">
+							<input id="TELGU" class="mihir" type="button" value="Telgu"></input>
+			   		</div>
+			  	</div>
+			</div>
+			
+			
 
 		</header>
 
@@ -281,7 +308,7 @@ p { margin: 0; }
 		(function() {
 
 	$('#live-chat header').on('click', function() {
-
+		
 		$('.chat').slideToggle(300, 'swing');
 		$('.chat-message-counter').fadeToggle(300, 'swing');
 
@@ -338,7 +365,7 @@ p { margin: 0; }
 				
 				
 				
-				var voice_HINDI = $('<input class="mihir" type="button" value="Hindi"></input>');
+				var voice_HINDI = $('#HINDI');
 				voice_HINDI.click(function(){
 					if(responsiveVoice.isPlaying()) {
 						responsiveVoice.pause();
@@ -349,8 +376,9 @@ p { margin: 0; }
 				});
 
 
-				var voice_TAMIL = $('<input class="mihir" type="button" value="Tamil"></input>');
-				voice_TAMIL.click(function(){
+				var voice_TAMIL = $('#TAMIL');
+				voice_TAMIL.click(function(e){
+					e.preventDefault();
 					if(responsiveVoice.isPlaying()) {
 						responsiveVoice.pause();
 					}
@@ -359,9 +387,19 @@ p { margin: 0; }
 					}
 				});
 
+				var voice_TELGU = $('#TELGU');
+				voice_TELGU.click(function(){
+					if(responsiveVoice.isPlaying()) {
+						responsiveVoice.pause();
+					}
+					else{
+						responsiveVoice.speak( result.telgu ,"Telgu",{rate: 0.75});
+					}
+				});
+
 				
 				var chatMessageContent = $('<div class="chat-message-content clearfix">').append(image,time,username,content,"<hr><br>");
-				$('.chat-history').append(chatMessageContent,voice_HINDI,voice_TAMIL);
+				$('.chat-history').append(chatMessageContent);
 				
 			
 		});
