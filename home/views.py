@@ -220,9 +220,59 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic.edit import DeleteView
 class CommentDelete(DeleteView):
   model=answer
-  success_url=reverse_lazy('social:post')
+  success_url=reverse_lazy('home:post')
 
 
 
 def dashboard(request):
 	return render(request,'home/dashboard.html')
+
+
+def organic_farming(request):
+	return render(request,'home/organic_farming.html')
+
+
+from rapidconnect import RapidConnect
+import json
+from urllib.request import urlopen
+
+def get_weather(city):
+	rapid = RapidConnect("default-application_5a68be4ce4b09c6b06da6c08", "551285ee-2f7d-45e2-8471-bc4aaae024ed")
+	result = rapid.call('YahooWeatherAPI', 'getWeatherForecast', { 
+	'location': city	,
+	'filter': ['item.condition,item.forecast'] 
+	})
+	return result
+
+
+@csrf_exempt
+def weather_forecast(request):
+	city = 'Raipur'
+	print("City detected : ",city)
+	results = get_weather(city)
+	print(results)
+	forecast = []
+	for i in range(0,10):
+		entry = {}
+		entry['high'] = results['query']['results']['channel'][i]['item']['forecast']['high']
+		entry['low'] = results['query']['results']['channel'][i]['item']['forecast']['low']
+		entry['text'] = results['query']['results']['channel'][i]['item']['forecast']['text']
+		entry['day'] = results['query']['results']['channel'][i]['item']['forecast']['day']
+		entry['date'] = results['query']['results']['channel'][i]['item']['forecast']['date']
+		text = results['query']['results']['channel'][i]['item']['forecast']['text']
+		try:
+			weather_img = Weather.objects.get(type=text)
+		except:
+			print("not for : ",text)	
+		entry['image'] = ""
+		forecast.append(entry)
+
+	#print(forecast)
+	return render(request,'home/weather_forecast.html',{'forecast':forecast})
+
+
+
+@csrf_exempt
+def predict(request):
+	print("post ajax")
+	print(request.POST.get('lat'))
