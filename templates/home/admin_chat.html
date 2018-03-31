@@ -420,6 +420,8 @@ $("#addClass").click(function () {
 			console.log(y.html());
 			y.html(msg.val());
 			
+			var y = x.children().eq(1).children().eq(1);
+            y.attr("src","https://image.ibb.co/kszF27/1457e76dcae4a40.jpg");
 			$(x).appendTo($(".popup-messages"));
 			
 
@@ -443,22 +445,25 @@ $("#addClass").click(function () {
         element.scrollTop = element.scrollHeight;
 
 
-	    socket.on('admin_getMessage', function(msgObject) {
+	    socket.on('farmer_answer', function(msgObject) {
 	        console.log(msgObject);
-	        var name = msgObject.user_name;
 	        var msg = msgObject.message;
-
-	        var receiver = $("#receiver").clone();
-	        var x = receiver.children().eq(0).children().eq(0).children().eq(0);
-	        x.html(msg);
-	        var x = receiver.children().eq(0).children().eq(0).children().eq(1);
-	        x.html(name);
-	        $(receiver).appendTo($("#conversation"));
-
-	       
-	        
+	        var x = $('<div class="direct-chat-messages"> <div class="chat-box-single-line"><abbr class="timestamp">March 31th, 2018</abbr></div> <div class="direct-chat-msg doted-border"> <div class="direct-chat-info clearfix"> <span class="direct-chat-name pull-right">Adminstrator</span> </div> <img alt="message user image" src="http://financemj.com/wp-content/uploads/2017/04/admin.png" class="direct-chat-img"> <div class="direct-chat-text"> May i assist you with anything ? </div> </div> </div></div><div class="popup-messages-footer">');
+            var y = x.children().eq(1).children().eq(0).children().eq(0);
+            y.html("Adminstrator");
+            
+            var y = x.children().eq(1).children().eq(2);
+            y.html(msg);
+            
+            $(x).appendTo($(".popup-messages"));
+    
+	        updateScroll();
 	    });
     }   
     
+    function updateScroll(){
+        var element = document.getElementById("main");
+        element.scrollTop = element.scrollHeight;
+    } 
 
 </script>

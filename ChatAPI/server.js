@@ -79,6 +79,11 @@ io.on('connection', function(socket) {
         socket.broadcast.emit('admin_sendQuery', msgObject);
     });
 
+    socket.on('admin_result', function(msgObject) {
+        // emits the msgObject to the client
+        socket.broadcast.emit('farmer_answer', msgObject);
+    });
+
 
     socket.on('wikisearch',function(queryObject){
         var url = 'http://' + host +':' + port + '/home/chat_query/';    

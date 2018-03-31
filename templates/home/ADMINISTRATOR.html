@@ -396,8 +396,10 @@ $("#addClass").click(function () {
 			y.html("Adminstrator");
 			
 			var y = x.children().eq(1).children().eq(2);
-			console.log(y.html());
+
 			y.html(msg.val());
+
+           
 			
 			$(x).appendTo($(".popup-messages"));
 			
@@ -406,14 +408,13 @@ $("#addClass").click(function () {
 		        if(msg.val().trim() !== "") {
 		          
 		            msgObject = {
-		                'user_name': "Farmer",
 		                'message': msg.val().trim()
 		            };
-		            socket.emit('admin_message', msgObject);
+		            socket.emit('admin_result', msgObject);
 		        }
 
 		          msg.val('');
- 
+ updateScroll();
 			return false;
 		});
 		 
@@ -428,11 +429,18 @@ $("#addClass").click(function () {
             var y = x.children().eq(1).children().eq(2);
             y.html(msg);
             
+             var y = x.children().eq(1).children().eq(1);
+            y.attr("src","https://image.ibb.co/kszF27/1457e76dcae4a40.jpg");
+            
+
             $(x).appendTo($(".popup-messages"));
     
-	        
+	        updateScroll();
 	    });
      
-    
+    function updateScroll(){
+        var element = document.getElementById("main");
+        element.scrollTop = element.scrollHeight;
+    }   
 
 </script>

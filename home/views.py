@@ -45,10 +45,10 @@ def test(request):
     trainer='chatterbot.trainers.ListTrainer'
 	)
 	
-	#train_from_text(chatbot,'/home/mayank/Desktop/crops/coffee.txt')
-	response = chatbot.get_response('tell me something about coffee')
+	train_from_text(chatbot,'/home/mayank/Desktop/crops/wheat.txt')
+	#response = chatbot.get_response('tell me something about coffee')
 
-	return HttpResponse(response)
+	return HttpResponse("done")
 
 
 
