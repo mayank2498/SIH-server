@@ -1,4 +1,4 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import render,HttpResponse,render_to_response,redirect
 from chatterbot import ChatBot
 from home.models import Weather
 import json
@@ -9,6 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from translator import get_in_languages
 from .models import Soil,answer,post_question
 from .forms import farmer_signup,discuss_form,comment_form
+from django.template import RequestContext
 # Create your views here.
 
 
@@ -62,33 +63,33 @@ def getWeather(lat,lon):
 	url = "https://api.darksky.net/forecast/7ed498b034dd29bc99c446de31588b03/"+str(lat)+","+str(lon)
 	v = urlopen(url).read()
 	v = json.loads(v.decode('utf-8'))
-	x = v['hourly']['data']
-	for i in x:
-		o = Weather()	
-		o.lat = lat
-		o.lon = lon
-		timestamp = i['time']
-		precipIntensity =  i['precipIntensity']
-		precipProbability =  i['precipProbability']
-		dewPoint =  i['dewPoint']
-		humidity =  i['humidity']
-		pressure =  i['pressure']
-		windSpeed =  i['windSpeed']
-		cloudCover =  i['cloudCover']
-		uvIndex =  i['uvIndex']
-		ozone =  i['ozone']    
+	i = v['currently']
+	
+	o = Weather()	
+	o.lat = lat
+	o.lon = lon
+	timestamp = i['time']
+	precipIntensity =  i['precipIntensity']
+	precipProbability =  i['precipProbability']
+	dewPoint =  i['dewPoint']
+	humidity =  i['humidity']
+	pressure =  i['pressure']
+	windSpeed =  i['windSpeed']
+	cloudCover =  i['cloudCover']
+	uvIndex =  i['uvIndex']
+	ozone =  i['ozone']    
 
-		o.timestamp = timestamp
-		o.precipIntensity = precipIntensity
-		o.precipProbability = precipProbability
-		o.dewPoint = dewPoint
-		o.humidity = humidity
-		o.pressure = pressure
-		o.windSpeed = windSpeed
-		o.cloudCover = cloudCover
-		o.uvIndex = uvIndex
-		o.ozone = ozone
-		o.save()
+	o.timestamp = timestamp
+	o.precipIntensity = precipIntensity
+	o.precipProbability = precipProbability
+	o.dewPoint = dewPoint
+	o.humidity = humidity
+	o.pressure = pressure
+	o.windSpeed = windSpeed
+	o.cloudCover = cloudCover
+	o.uvIndex = uvIndex
+	o.ozone = ozone
+	o.save()
 
 def save_weather(request):
 	lt=[12.0,12.25,12.5,12.75,13.0,13.25,13.5,13.75,14.0,14.25,14.5,14.75,15.0,15.25,15.5,15.75,16.0,16.25]
@@ -102,7 +103,7 @@ def save_weather(request):
 
 
 def index(request):
-	return render(request,'home/index.html')
+	return render(request,'home/index_new.html')
 
 
 @csrf_exempt
@@ -134,7 +135,7 @@ def administrator(request):
 	return render(request,'home/ADMINISTRATOR.html')
 
 def index(request):
-	return render(request,'home/index.html')
+	return render(request,'home/index_new.html')
 
 def contact(request):
 	return render(request,'home/contact.html')
@@ -208,6 +209,11 @@ def add_comment(request,ans_id):
 
   return render(request, 'home/forum.html', {'ans': ans, 'form': form,'form2':form2})
 
+def singleblog(request):
+    return render(request,'home/singleblog.html')
+
+def blog(request):
+    return render(request,'home/blog.html')
 
 
 from django.core.urlresolvers import reverse_lazy
@@ -216,4 +222,7 @@ class CommentDelete(DeleteView):
   model=answer
   success_url=reverse_lazy('social:post')
 
-	
+
+
+def dashboard(request):
+	return render(request,'home/dashboard.html')

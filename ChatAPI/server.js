@@ -81,6 +81,7 @@ io.on('connection', function(socket) {
 
     socket.on('admin_result', function(msgObject) {
         // emits the msgObject to the client
+        console.log("ok so admin sent a response");
         socket.broadcast.emit('farmer_answer', msgObject);
     });
 

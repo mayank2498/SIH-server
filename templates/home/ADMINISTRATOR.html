@@ -410,6 +410,7 @@ $("#addClass").click(function () {
 		            msgObject = {
 		                'message': msg.val().trim()
 		            };
+                    console.log("emitted");
 		            socket.emit('admin_result', msgObject);
 		        }
 

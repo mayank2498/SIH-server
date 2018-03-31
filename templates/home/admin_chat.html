@@ -437,12 +437,10 @@ $("#addClass").click(function () {
 
 		          msg.val('');
 
-		           updateScroll();   
+		             
 			return false;
 		});
-		 function updateScroll(){
-        var element = document.getElementById("main");
-        element.scrollTop = element.scrollHeight;
+		 
 
 
 	    socket.on('farmer_answer', function(msgObject) {
@@ -459,7 +457,7 @@ $("#addClass").click(function () {
     
 	        updateScroll();
 	    });
-    }   
+     
     
     function updateScroll(){
         var element = document.getElementById("main");

@@ -114,6 +114,7 @@ p { margin: 0; }
   right: 24px;
   position: fixed;
   width: 500px;
+  z-index:99999;
 }
 
 #live-chat header {
@@ -402,7 +403,7 @@ p { margin: 0; }
 						responsiveVoice.pause();
 					}
 					else{
-						responsiveVoice.speak( result.tamil ,"Tamil Male",{rate: 0.75});
+						responsiveVoice.speak( result.tamil ,"Tamil Male",{rate: 0.25});
 					}
 				});
 

@@ -19,6 +19,9 @@ urlpatterns = [
     url(r'^add_comment/(?P<ans_id>[0-9]+)/$',views.add_comment,name='add_comment'),
     url(r'^post/(?P<pk>[0-9]+)/delete/$',views.CommentDelete.as_view(),name='comment-delete'),
     url(r'^post/$',views.post,name='post'),
+    url(r'^singleblog/$',views.singleblog,name='singleblog'),
+   url(r'^blog/$',views.blog,name='blog'),
+   url(r'^dashboard/$',views.dashboard,name='dashboard')
 ]
 
 
