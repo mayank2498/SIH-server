@@ -7,6 +7,8 @@ from chatterbot.trainers import ListTrainer
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse, HttpResponseRedirect,JsonResponse
 from translator import get_in_languages
+from .models import Soil,answer,post_question
+from .forms import farmer_signup,discuss_form,comment_form
 # Create your views here.
 
 
@@ -130,5 +132,88 @@ def chat_admin(request):
 
 def administrator(request):
 	return render(request,'home/ADMINISTRATOR.html')
+
+def index(request):
+	return render(request,'home/index.html')
+
+def contact(request):
+	return render(request,'home/contact.html')
+
+def weather(request):
+	return render(request,'home/weather.html')
+
+
+
+def signup(request):
+	context=RequestContext(request)
+	registered=False
+	if request.method=='POST':	
+		
+		form=farmer_signup(data=request.POST)
+
+		if form.is_valid():
+			form.save()
+			registered=True
+			
+			return redirect('/home/')
+		else:
+			print(form.errors)
+
+	else:
+		form=farmer_signup()
+	return render_to_response('home/signup.html',{'form':form,'registered':registered},context)
+
+
+def ask_question(request):
+  context=RequestContext(request)
+  registered=False
+  if request.method=='POST':	
+
+    form=discuss_form(data=request.POST)
+
+    if form.is_valid():
+      form.save()
+      registered=True
+      return redirect('/home/post/')
+    else:
+      print(form.errors)
+
+  else:
+    form=discuss_form()
+
+  return render_to_response('home/forum.html',{'form':form,'registered':registered},context)
+
+def post(request):
+  post=post_question.objects.all()
+  post2 = answer.objects.all()
+  return render(request,'home/forum.html',{'post':post,'post2':post2})
+
+
+def add_comment(request,ans_id):
+  form2=discuss_form()
+  ans=get_object_or_404(post_question,pk=ans_id)
+  form=comment_form(request.POST)
+  print(form.is_valid())
+  if form.is_valid():
+    user_name=form.cleaned_data['user_name']
+    comment=form.cleaned_data['comment']
+    add=answer()
+    add.user_name=user_name
+    add.comment=comment
+    add.pub_date = datetime.datetime.now()
+    ob=post_question.objects.get(id=ans_id)
+    add.ques=ob
+    add.save()
+    return redirect('/home/post/')
+
+  return render(request, 'home/forum.html', {'ans': ans, 'form': form,'form2':form2})
+
+
+
+from django.core.urlresolvers import reverse_lazy
+from django.views.generic.edit import DeleteView
+class CommentDelete(DeleteView):
+  model=answer
+  success_url=reverse_lazy('social:post')
 
 	
