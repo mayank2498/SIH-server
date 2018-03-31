@@ -10,6 +10,7 @@ from translator import get_in_languages
 from .models import Soil,answer,post_question
 from .forms import farmer_signup,discuss_form,comment_form
 from django.template import RequestContext
+import pandas as pd
 # Create your views here.
 
 
@@ -271,8 +272,37 @@ def weather_forecast(request):
 	return render(request,'home/weather_forecast.html',{'forecast':forecast})
 
 
+def getCity(lat,lon):
+   url = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyBdWsMTk1r9z49-_Nh0XIq4kisJ2T49gsY&"
+   url += "latlng=%s,%s&sensor=false" % (lat,lon)
+   v = urlopen(url).read()
+   v = json.loads(v.decode('utf-8'))
+ 
+   for i in range(0,len(v["results"][0]['address_components'])):
+       if "locality" in v["results"][0]['address_components'][i]['types'] :
+           try:
+               x = float(v["results"][0]['address_components'][i]["long_name"])
+               return v["results"][0]['address_components'][i]["long_name"]
+           except:
+               break
+   return v["results"][0]['address_components'][1]["long_name"]        
+
+
 
 @csrf_exempt
 def predict(request):
-	print("post ajax")
-	print(request.POST.get('lat'))
+	
+	lat = request.POST.get('lat')
+	lon = request.POST.get('lon')
+	city = getCity(lat,lon)
+	print(city)
+	result = pd.read_csv("/home/mayank/Desktop/SIH_ExtremeCoders/result.csv")
+	select = result[result.lat==float(lat)]
+	select = select[select.lon==float(lon)]
+	select = select.drop_duplicates(subset='crop')
+	x = list(select['crop'][:5])
+	output = {}
+	output['city'] = city
+	output['crops'] = x 
+	print(output)
+

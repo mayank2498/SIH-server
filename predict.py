@@ -7,7 +7,7 @@ Created on Sat Mar 31 09:14:00 2018
 """
 import pandas as pd
 
-result = pd.read_csv("result.csv")
+result = pd.read_csv("/home/mayank/Desktop/SIH_ExtremeCoders/result.csv")
 
 x= input("lat:")
 y= input("lon:")
