@@ -217,11 +217,7 @@ def blog(request):
     return render(request,'home/blog.html')
 
 
-from django.core.urlresolvers import reverse_lazy
-from django.views.generic.edit import DeleteView
-class CommentDelete(DeleteView):
-  model=answer
-  success_url=reverse_lazy('home:post')
+
 
 
 
@@ -288,7 +284,9 @@ def getCity(lat,lon):
    return v["results"][0]['address_components'][1]["long_name"]        
 
 
-
+import numpy as np
+import pickle
+import sklearn
 @csrf_exempt
 def predict(request):
 	
@@ -302,7 +300,30 @@ def predict(request):
 	select = select.drop_duplicates(subset='crop')
 	x = list(select['crop'][:5])
 	output = {}
+	ans = " "
+	ans = ans + "\n"
+	ans = ans + str(city) + "    :    "
+	ans = ans + "\n"
 	output['city'] = city
 	output['crops'] = x 
-	print(output)
 
+	for i in x:
+		ans = ans + str(i) + " "
+		ans = ans + "\n"
+	filename = '/home/mayank/Desktop/SIH_ExtremeCoders/Saved_Models/scaler.pkl'
+	filename1 = '/home/mayank/Desktop/SIH_ExtremeCoders/Saved_Models/kmeans.pkl'
+
+	sc_X = pickle.load(open(filename, 'rb'))
+	kmeans = pickle.load(open(filename1, 'rb'))
+	X_check = np.array([14.75,    0.0012,    0.03,    76.41,    0.8    ,1010.06,    14.81,    0.89,    7    ,277.34,    80.5,    10,    12,    14,    2,    5,    45,    227445,10])
+	X_scaled = sc_X.transform(X_check.reshape(1,-1))
+	centroid=kmeans.predict(X_scaled)
+
+	dis=kmeans.cluster_centers_[centroid]
+	water = sc_X.inverse_transform(dis-X_scaled)
+	water_req = water[0][18]/X_check[18]
+	water_req = water_req*100
+	ans = ans + str(water_req) + " percent Water "
+	output['water'] = water_req*100
+	print(output)
+	return HttpResponse(ans)

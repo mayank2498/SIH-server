@@ -5,7 +5,12 @@
 	{% load staticfiles%}
   <meta charset="UTF-8">
   <title>Farmer's Portal</title>
- 
+ <div id="google_translate_element"></div><script type="text/javascript">
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({pageLanguage: 'en', includedLanguages: 'bn,en,fr,gu,hi,ml,mr,ne,pa,ta,te,zh-CN', layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL}, 'google_translate_element');
+}
+</script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        
 <link href='http://fonts.googleapis.com/css?family=Arimo:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
   <meta name="viewport" content="width=device-width, initial-scale=1">	
 <script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
@@ -9673,9 +9678,10 @@ path {
             type: 'POST',
             url : '/home/predict/',
             data:data,
-            success: function(){
-                $(':input[type="submit"]').prop('disabled', false);
-                alert('Thank you for contacting us !');
+            success: function(data){
+                alert(String(data));
+                console.log(data);
+                $('#results').html(data);
             },
             error: function(){
                 

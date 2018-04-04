@@ -42,7 +42,7 @@ class post_question(models.Model):
 
 
 class answer(models.Model):
-    ques = models.ForeignKey(post_question)
+    ques = models.ForeignKey(post_question,on_delete=models.CASCADE)
     pub_date = models.DateTimeField('date published')
     user_name = models.CharField(max_length=100)
     comment = models.CharField(max_length=200)
